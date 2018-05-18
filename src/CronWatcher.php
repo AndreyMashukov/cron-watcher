@@ -10,6 +10,8 @@ class CronWatcher
      * Check process signal and kill current process if script already run.
      *
      * @see {http://man7.org/linux/man-pages/man7/signal.7.html}
+     *
+     * @SuppressWarnings("PHPMD.Superglobals")
      */
     public static function run()
     {

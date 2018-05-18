@@ -57,11 +57,14 @@ class CronWatcherTest extends TestCase
      * Should allow to run script by CLI only one time.
      *
      * @group unit
+     *
+     * @SuppressWarnings("PHPMD.Superglobals")
      */
     public function testUnitShouldAllowToRunScriptByCliOnlyOneTime()
     {
+        $argv    = $_SERVER['argv'];
+        $name    = \md5(\implode('_', $argv));
         $tmpPath = \sys_get_temp_dir();
-        $name    = 'd41d8cd98f00b204e9800998ecf8427e';
 
         $path = $tmpPath . '/' . $name;
 
