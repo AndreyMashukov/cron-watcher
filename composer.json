@@ -1,0 +1,52 @@
+{
+    "name": "andrey-mashukov/cron-watcher",
+    "keywords": [
+        "cron_process_watcher",
+        "process_watcher",
+        "duplicate_process_killer"
+    ],
+    "homepage": "https://github.com/AndreyMashukov/cron-watcher",
+    "description": "Cron process watcher",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andrey Mashukov",
+            "email": "a.mashukov@yandex.ru",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "AM\\CronWatcher\\": [
+                "src"
+            ]
+        },
+        "classmap": [
+            "src"
+        ]
+    },
+    "require": {
+        "php": ">=7.2",
+        "ext-json": "*"
+
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": [
+                "tests"
+            ]
+        }
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.11",
+        "phpmd/phpmd": "^2.6",
+        "symfony/process": "^4.0",
+        "pdepend/pdepend": "^2.2",
+        "phploc/phploc": "^2.1",
+        "sebastian/phpcpd": "^2.0",
+        "phpdocumentor/phpdocumentor": "^2.9",
+        "mamuz/php-dependency-analysis": "^0.6",
+        "phpunit/phpunit": "^6.5"
+    },
+    "prefer-stable": true
+}
