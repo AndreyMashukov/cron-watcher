@@ -5,19 +5,12 @@
     <!-- Clean up -->
     <target name="clean">
         <delete dir="build"/>
-        <antcall target="decompose"/>
-    </target>
-
-    <!-- Remove composer files -->
-    <target name="decompose">
-        <delete dir="vendor"/>
-        <delete file="composer.lock"/>
     </target>
 
     <!-- Download dependencies -->
     <target name="dependencies">
         <exec executable="composer" failonerror="true">
-            <arg line="update"/>
+            <arg line="install --prefer-dist --quiet"/>
         </exec>
     </target>
 
@@ -30,7 +23,6 @@
             <antcall target="phploc"/>
             <antcall target="phpcpd"/>
             <antcall target="phpcs"/>
-            <antcall target="phpdoc"/>
             <antcall target="phpda"/>
         </sequential>
     </target>
@@ -54,7 +46,7 @@
     <!-- Generate pmd.xml -->
     <target name="phpmd">
         <mkdir dir="${basedir}/build/logs"/>
-        <exec executable="vendor/bin/phpmd">
+        <exec executable="vendor/bin/phpmd" failonerror="true">
             <arg line="${basedir}/src xml md_ruleset.xml --exclude vendor --reportfile ${basedir}/build/logs/pmd.xml"/>
         </exec>
     </target>
@@ -75,14 +67,6 @@
         </exec>
     </target>
 
-    <!-- Generate API documentation -->
-    <target name="phpdoc">
-        <mkdir dir="${basedir}/build/api"/>
-        <exec executable="vendor/bin/phpdoc">
-            <arg line="-d ${basedir} -t build/api --title='${ant.project.name} documentation' --defaultpackagename=Logics --ignore-tags=untranslatable,donottranslate,requiredconst,optionalconst,internalconst,codeCoverageIgnore,dataProvider,depends,expectedException,expectedExceptionMessage,expectedExceptionMessageRegExp,requires,runTestsInSeparateProcesses,runInSeparateProcess,soap,soap-header-input,soap-header-output,soap-wsdl,soap-indicator --template='responsive-twig' --ignore=vendor/"/>
-        </exec>
-    </target>
-
     <!-- Generate dependency graph -->
     <target name="phpda">
         <mkdir dir="${basedir}/build/phpda"/>
@@ -93,12 +77,10 @@
 
     <!-- Check code style -->
     <target name="phpcs">
-        <mkdir dir="${basedir}/build/logs"/>
-        <exec executable="vendor/bin/php-cs-fixer" output="/dev/null">
-            <arg line="fix --dry-run -v --using-cache=no --diff | tee ${basedir}/build/log/php-cs-fixer.log"/>
+        <exec executable="vendor/bin/php-cs-fixer" failonerror="true">
+            <arg line="fix --dry-run -v --using-cache=no --diff --config ${basedir}/.php_cs.dist"/>
         </exec>
     </target>
-
 
     <!-- Run tests -->
     <target name="tests">
@@ -141,7 +123,6 @@
             <antcall target="dependencies"/>
             <antcall target="codeanalysis"/>
             <antcall target="tests"/>
-            <antcall target="decompose"/>
         </sequential>
     </target>
 
