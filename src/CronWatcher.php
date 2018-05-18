@@ -13,11 +13,8 @@ class CronWatcher
      */
     public static function run()
     {
+        $argv    = $_SERVER['argv'];
         $tmpPath = \sys_get_temp_dir();
-
-        if (false === isset($argv)) {
-            $argv = [];
-        } //end if
 
         $name = \md5(\implode('_', $argv));
         $path = $tmpPath . '/' . $name;
