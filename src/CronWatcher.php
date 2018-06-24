@@ -9,16 +9,21 @@ class CronWatcher
     /**
      * Check process signal and kill current process if script already run.
      *
+     * @param null|string $name
+     *
      * @see {http://man7.org/linux/man-pages/man7/signal.7.html}
      *
      * @SuppressWarnings("PHPMD.Superglobals")
      */
-    public static function run()
+    public function run(?string $name = null)
     {
-        $argv    = $_SERVER['argv'];
         $tmpPath = \sys_get_temp_dir();
 
-        $name = \md5(\implode('_', $argv));
+        if (null === $name) {
+            $argv = $_SERVER['argv'];
+            $name = \md5(\implode('_', $argv));
+        }
+
         $path = $tmpPath . '/' . $name;
 
         if (true === \file_exists($path)) {

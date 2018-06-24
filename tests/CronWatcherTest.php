@@ -14,7 +14,8 @@ class CronWatcherTest extends TestCase
     {
         $script = "<?php\n"
             . "require __DIR__ . '/../vendor/autoload.php';\n\n"
-            . "\\AM\\CronWatcher\\CronWatcher::run();\n\n"
+            . "\$watcher = new \\AM\\CronWatcher\\CronWatcher();\n\n"
+            . "\$watcher->run();\n\n"
             . "echo 'script started';\n"
             . '\\sleep(50);';
 
@@ -74,7 +75,8 @@ class CronWatcherTest extends TestCase
 
         $this->assertFileNotExists($path);
 
-        \AM\CronWatcher\CronWatcher::run();
+        $watcher = new \AM\CronWatcher\CronWatcher();
+        $watcher->run();
 
         $this->assertFileExists($path);
 
@@ -83,6 +85,6 @@ class CronWatcherTest extends TestCase
 
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage('Script already ran!');
-        \AM\CronWatcher\CronWatcher::run();
+        $watcher->run();
     }
 }
